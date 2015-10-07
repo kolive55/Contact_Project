@@ -26,11 +26,12 @@ class Contact
     end
 
     def all
-      all = ContactDatabase.read
+      ContactDatabase.read
       # TODO: Return the list of contacts, as is
     end
 
     def show(id)
+      ContactDatabase.show(id)
       # TODO: Show a contact, based on ID
     end
 

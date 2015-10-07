@@ -4,7 +4,7 @@ require 'csv'
 class ContactDatabase
 
   def initialize
-    results = CSV.read("contacts.csv", :headers => true)
+    results = CSV.read("contacts.csv")
     results.each_with_index do |index, contact|
       next if index == 0
       Contact.new(contact[0], contact[1])
@@ -18,7 +18,22 @@ class ContactDatabase
   end
 
   def self.read
-    display = CSV.read("contacts.csv", :headers => true)
-    puts display
+    display = CSV.read("contacts.csv")
+    display.each_with_index do |index, contact|
+      next if contact == 0
+      puts "#{contact}"+"\."+"#{index[0]}" +","+ "#{index[1]}"
     end
+  end
+
+  def self.show(id)
+    display = CSV.read("contacts.csv")
+    display.each_with_index do |contact, index|
+      if id == index
+      puts "#{contact[0]}, #{contact[1]}"
+      end
+    end
+  end
+
+  
+
 end

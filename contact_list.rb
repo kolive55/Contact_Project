@@ -24,7 +24,13 @@ puts "Please enter a command:"
         Contact.create(name, email)
 
     elsif command == 'list'
-      Contact.all
+        Contact.all
+
+    elsif command == 'show'
+      puts 'Enter an ID'
+      id = STDIN.gets.chomp
+      Contact.show(id.to_i)
+
     else
         puts 'Not recognized'
     end
