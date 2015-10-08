@@ -44,7 +44,7 @@ class ContactDatabase
         results << row
       end
     end
-    results
+    puts results
   end
 
 end

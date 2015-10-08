@@ -1,4 +1,4 @@
-
+#!/usr/bin/env ruby
 require 'pry'
 require_relative 'contact'
 require_relative 'contact_database'
@@ -6,35 +6,32 @@ require_relative 'contact_database'
 @db = ContactDatabase.new
 
 ARGV << 'Help' if ARGV.empty?
-  puts %q(
-    Here is a list of available commands:
-    new  - Create a new contact
-    list - List all contacts
-    show - Show a contact
-    find - Find a contact
-    )
+  puts "Here is a list of available commands:"
+  puts  "new  - Create a new contact"
+  puts  "list - List all contacts"
+  puts  "show - Show a contact"
+  puts  "find - Find a contact"
 
 
-puts "Please enter a command:"
-      command = STDIN.gets.chomp
-        if command == 'new'
-        puts 'Enter contact email:'
-        email = STDIN.gets.chomp
-        puts 'Enter contact name:'
-        name = STDIN.gets.chomp
-        puts 'Enter contact phone number:'
-        phone_numbers = STDIN.gets.chomp
-        Contact.create(name, email, phone_numbers)
+case ARGV[0]
+   when 'new'
+    puts 'Enter contact email:'
+    email = STDIN.gets.chomp
+    puts 'Enter contact name:'
+    name = STDIN.gets.chomp
+    puts 'Enter contact phone number:'
+    phone_numbers = STDIN.gets.chomp
+    Contact.create(name, email, phone_numbers)
 
-    elsif command == 'list'
-        Contact.all
+    when 'list'
+      Contact.all
 
-    elsif command == 'show'
+    when 'show'
       puts 'Enter an ID'
       id = STDIN.gets.chomp.to_i
       Contact.show(id)
 
-    elsif command == 'find'
+    when 'find'
       puts 'Enter search term'
       term = STDIN.gets.chomp
       Contact.find(term)
