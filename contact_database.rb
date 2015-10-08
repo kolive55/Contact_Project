@@ -37,13 +37,21 @@ class ContactDatabase
   def self.find(term)
     display = CSV.read("contacts.csv")
     v = Regexp.new(term)
+    results = []
     display.each do |row|
-      row.each do |cell|
-        if v.match(cell)
-          puts row
-        end
+      row = row.join(', ')
+      if v.match(row)
+        results << row
       end
     end
+
+      # row.each do |cell|
+      #   if v.match(cell)
+      #     results << cell
+      #     # puts row
+      #   end
+      # end
+    results
   end
 
 end

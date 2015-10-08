@@ -16,8 +16,12 @@ class Contact
   ## Class Methods
   class << self
     def create(name, email, phone_numbers)
+      if self.find(email).any?
+        puts "This contact already exists"
+      else
        Contact.new(name, email, phone_numbers)
        ContactDatabase.save_contact([name, email, phone_numbers])
+     end
        # TODO: Will initialize a contact as well as add it to the list of contacts
     end
 

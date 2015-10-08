@@ -1,3 +1,4 @@
+
 require 'pry'
 require_relative 'contact'
 require_relative 'contact_database'
@@ -15,15 +16,15 @@ ARGV << 'Help' if ARGV.empty?
 
 
 puts "Please enter a command:"
-  command = STDIN.gets.chomp
-    if command == 'new'
+      command = STDIN.gets.chomp
+        if command == 'new'
         puts 'Enter contact email:'
-        name = STDIN.gets.chomp
-        puts 'Enter contact name:'
         email = STDIN.gets.chomp
+        puts 'Enter contact name:'
+        name = STDIN.gets.chomp
         puts 'Enter contact phone number:'
         phone_numbers = STDIN.gets.chomp
-        Contact.create(email, name, phone_numbers)
+        Contact.create(name, email, phone_numbers)
 
     elsif command == 'list'
         Contact.all
