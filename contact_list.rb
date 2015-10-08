@@ -17,19 +17,26 @@ ARGV << 'Help' if ARGV.empty?
 puts "Please enter a command:"
   command = STDIN.gets.chomp
     if command == 'new'
-        puts 'Enter contact name:'
-        name = STDIN.gets.chomp
         puts 'Enter contact email:'
+        name = STDIN.gets.chomp
+        puts 'Enter contact name:'
         email = STDIN.gets.chomp
-        Contact.create(name, email)
+        puts 'Enter contact phone number:'
+        phone_numbers = STDIN.gets.chomp
+        Contact.create(email, name, phone_numbers)
 
     elsif command == 'list'
         Contact.all
 
     elsif command == 'show'
       puts 'Enter an ID'
-      id = STDIN.gets.chomp
-      Contact.show(id.to_i)
+      id = STDIN.gets.chomp.to_i
+      Contact.show(id)
+
+    elsif command == 'find'
+      puts 'Enter search term'
+      term = STDIN.gets.chomp
+      Contact.find(term)
 
     else
         puts 'Not recognized'

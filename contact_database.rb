@@ -7,7 +7,7 @@ class ContactDatabase
     results = CSV.read("contacts.csv")
     results.each_with_index do |index, contact|
       next if index == 0
-      Contact.new(contact[0], contact[1])
+      Contact.new(contact[0], contact[1], contact[2])
     end
   end
 
@@ -21,19 +21,29 @@ class ContactDatabase
     display = CSV.read("contacts.csv")
     display.each_with_index do |index, contact|
       next if contact == 0
-      puts "#{contact}"+"\."+"#{index[0]}" +","+ "#{index[1]}"
+      puts "#{contact}"+"\."+"#{index[0]}" +","+ "#{index[1]}, #{index[2]}"
     end
   end
 
   def self.show(id)
     display = CSV.read("contacts.csv")
-    display.each_with_index do |contact, index|
-      if id == index
-      puts "#{contact[0]}, #{contact[1]}"
+    display.each_with_index  do |contact, index|
+       if id == index
+         puts "#{contact[0]}, #{contact[1]}, #{contact[2]}"
+       end
+     end
+   end
+
+  def self.find(term)
+    display = CSV.read("contacts.csv")
+    v = Regexp.new(term)
+    display.each do |row|
+      row.each do |cell|
+        if v.match(cell)
+          puts row
+        end
       end
     end
   end
-
-  
 
 end
