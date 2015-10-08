@@ -44,13 +44,6 @@ class ContactDatabase
         results << row
       end
     end
-
-      # row.each do |cell|
-      #   if v.match(cell)
-      #     results << cell
-      #     # puts row
-      #   end
-      # end
     results
   end
 
