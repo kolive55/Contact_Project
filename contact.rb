@@ -1,45 +1,50 @@
 require_relative 'contact_database'
+require 'pg'
+require 'pry'
+
 class Contact
 
-  attr_accessor :name, :email, :phone_numbers
+  CONN = PG::Connection.new({
+     host: 'localhost',
+     dbname: 'contacts',
+     user: 'kyria',
+     password: 'development'
+  })
 
-  def initialize(name, email, phone_numbers)
-    @name = name
+  attr_accessor :firstname, :lastname, :email, :id
+
+  def initialize(firstname, lastname, email)
+    @firstname = firstname
+    @lastname = lastname
     @email = email
-    @phone_numbers = phone_numbers
+    @id = id
   end
 
-  def to_s
-    "Name: #{@name}, Email: #{@email}"
+  def self.create(firstname, lastname, email)
+    contact = Contact.new(firstname, lastname, email)
+    contact.save
   end
 
-  ## Class Methods
-  class << self
-    def create(name, email, phone_numbers)
-      if self.find(email).any?
-        puts "This contact already exists"
-      else
-       Contact.new(name, email, phone_numbers)
-       ContactDatabase.save_contact([name, email, phone_numbers])
-     end
-       # TODO: Will initialize a contact as well as add it to the list of contacts
-    end
+  def save
+    action = ('INSERT INTO contacts (first_name, last_name, email) VALUES ($1, $2, $3);')
+    CONN.exec_params(action, [firstname, lastname, email])
+  end
 
-    def find(term)
-      ContactDatabase.find(term)
-      # TODO: Will find and return contacts that contain the term in the first name, last name or email
-    end
+  def self.update(firstname, lastname, email)
+    @id
+    binding.pry
+    action = ('UPDATE contacts SET first_name=$1, last_name=$2, email=$3 WHERE id = @id; ')
+    CONN.exec_params(action, [firstname, lastname, email])
+  end
 
-    def all
-      ContactDatabase.read
-      # TODO: Return the list of contacts, as is
+  def self.all
+    results = CONN.exec_params("SELECT * FROM contacts;")
+    results.map do |contact|
+      p contact
     end
-
-    def show(id)
-      ContactDatabase.show(id)
-      # TODO: Show a contact, based on ID
-    end
-
   end
 
 end
+
+# Contact.all
+Contact.update('Oscar', 'Bluth', 'Oscar3@bluth.bluth')
